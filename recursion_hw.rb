@@ -36,6 +36,7 @@ def gamma_fnc(n)
   (n-1) * gamma_fnc(n-1)
 end
 
+
     # Test Cases
     p gamma_fnc(0)  # => returns nil
     p gamma_fnc(1)  # => returns 1
