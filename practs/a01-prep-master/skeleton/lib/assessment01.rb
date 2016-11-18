@@ -59,6 +59,12 @@ class Array
   # [1, 3, 4, 3, 0, 3, 0].dups => { 3 => [1, 3, 5], 0 => [4, 6] }
 
   def dups
+    hash = Hash.new{[]}
+    self.each_with_index do |el, idx|
+      l = self[0...idx]; r = self[idx+1..-1]
+      hash[el] += [idx] if l.include?(el) || r.include?(el)
+    end
+    hash
   end
 end
 
@@ -86,9 +92,32 @@ class Array
   # Write an Array#merge_sort method; it should not modify the original array.
 
   def merge_sort(&prc)
+    prc ||= Proc.new {|x,y| x <=> y} #set proc conditionally equal to spec-described proc
+
+    return self if self.length <= 1
+    midpoint = self.length/2
+    l = self.take(midpoint).merge_sort(&prc)
+    r = self.drop(midpoint).merge_sort(&prc)
+    Array.merge(l, r, &prc)
   end
 
   private
-  def self.merge(left, right, &prc)
+  def self.merge(l, r, &prc)
+    res =[]
+
+    until l.empty? || r.empty?
+      case prc.call(l.first, r.first)
+      when -1
+        res.push(l.shift)
+      when 0 #doesn't matter either way
+        res.push(l.shift)
+      when 1
+        res.push(r.shift)
+      end
+    end
+
+    res.concat(l); res.concat(r) #add remaining, if any
+
+    res
   end
 end
