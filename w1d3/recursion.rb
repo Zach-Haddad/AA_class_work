@@ -11,17 +11,23 @@ def recursive_sum(arr)
   arr.shift + recursive_sum(arr)
 end
 
+# def sum_rec(nums)
+#   return 0 if nums.empty?
+#   nums[0] + sum_rec(nums.drop(1))
+# end
+
+# use drop instead!
+
 def it_sum(arr)
   arr.reduce(0, :+)
 end
 
 def expo1(base, exponent)
-  return 1 if exponent == 0
-  base * expo1(base, exponent-1)
+  exponent == 0 ? 1 : base * expo1(base, exponent-1)
 end
 
 def expo2(base, exponent)
-  return 1 if exponent.zero?
+  return 1 if exponent == 0
   return base if exponent == 1
 
   if exponent.even?
@@ -36,13 +42,8 @@ class Array
     result = []
 
     self.each do |el|
-      if el.is_a?(Array)
-        result += [el.deep_dup]
-      else
-        result << el
-      end
+      result << (el.is_a?(Array) ? el.deep_dup : el)
     end
-
     result
   end
 end
@@ -54,7 +55,6 @@ def fib_it(n)
   (n-2).times {base << (base[-1] + base[-2])}
 
   base[0..(n-1)]
-
 end
 
 # def fib_rec(n)
@@ -73,6 +73,17 @@ def fib_rec(n, base=[1,1])
   n > 2 ? fib_rec(n-1, base + [base[-1] + base[-2]]) : base
 end
 
+# def fibs_rec(n)
+#   if n <= 2
+#     [0, 1].take(n)
+#   else
+#     fibs = fibs_rec(n - 1)
+#     fibs << fibs[-2] + fibs[-1]
+#   end
+# end
+
+#counts 0 as a term in fib seq!
+
 # def permutations(array)
 #   return array.first if array.length == 1
 #   result = []
@@ -84,6 +95,36 @@ end
 #
 #   result
 # end
+
+def permutations(array)
+  return [array] if array.length <= 1
+
+
+  # Similar to the subsets problem, we observe that to get the permutations
+  # of [1, 2, 3] we can look at the permutations of [1, 2] which are
+  # [1, 2] and [2, 1] and add the last element to every possible index getting
+  # [3, 1, 2], [1, 3, 2], [1, 2, 3], [3, 2, 1], [2, 3, 1]
+
+  # pop off the last element
+  first = array.shift
+  # make the recursive call
+  perms = permutations(array)
+  # we will need an array to store all our different permutations
+  total_permutations = []
+
+
+  # Now we iterate over the result of our recusive call say [[1, 2], [2, 1]]
+  # and for each permutation add first into every index. This new subarray
+  # gets added to total_permutations.
+  perms.each do |perm|
+    (0..perm.length).each do |i|
+      total_permutations << perm[0 ... i] + [first] + perm[i .. -1]
+    end
+  end
+  total_permutations
+end
+
+
 
 # def bsearch(arr, target, low=0, high=nil)
 #   if high == nil
