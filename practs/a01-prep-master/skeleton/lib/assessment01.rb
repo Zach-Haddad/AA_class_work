@@ -4,18 +4,25 @@ class Array
   # Monkey patch the Array class and add a my_inject method. If my_inject receives
   # no argument, then use the first element of the array as the default accumulator.
 
-  def my_inject(accumulator = nil, &prc)
-    i = 0
-    if accumulator.nil?
-      accumulator = self.first
-      i += 1
-    end
+  # def my_inject(accumulator = nil, &prc)
+  #   i = 0
+  #   if accumulator.nil?
+  #     accumulator = self.first
+  #     i += 1
+  #   end
+  #
+  #   while i < self.length
+  #     accumulator = prc.call(accumulator, self[i])
+  #     i += 1
+  #   end
+  #
+  #   accumulator
+  # end
 
-    while i < self.length
-      accumulator = prc.call(accumulator, self[i])
-      i += 1
-    end
+  def my_inject(accumulator = nil)
+    accumulator ||= self.shift
 
+    self.each {|x| accumulator = yield(accumulator, x)} #watch space between yield and (!
     accumulator
   end
 end
@@ -44,8 +51,8 @@ end
 
 def factorials_rec(num)
   return [1] if num == 1
-  facs = factorials_rec(num-1)
-  facs << facs.last * (num-1)
+  facs = factorials_rec(num-1) #previous
+  facs << facs.last * (num-1) #next
   facs
 end
 
