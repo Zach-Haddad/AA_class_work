@@ -58,7 +58,7 @@ class RecursionMachine
 
   #deep dup question from class
   def deep_dup(arr)
-    arr.map {|sub| sub.is_a?(Array) ? deep_dup(sub) : sub}
+    map {|sub| sub.is_a?(Array) ? deep_dup(sub) : sub}
   end
 
   # Write a recursive method that takes in a string to search and a key string.
