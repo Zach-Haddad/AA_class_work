@@ -5,7 +5,7 @@ class Array
   # no argument, then use the first element of the array as the default accumulator.
 
   def my_inject(accumulator = nil)
-    accumulator ||= shift
+    accumulator ||= self.shift
 
     each {|el| accumulator = yield(accumulator, el)}
     accumulator
@@ -17,19 +17,19 @@ end
 
 def is_prime?(num)
   return false if num < 2
-  (2...num).none? {|x| num % x == 0}
+  (2...num).none? {|el| num % el == 0}
 end
 
 def primes(num)
-  primes = []
+  res = []
   i = 2
 
-  until primes.length == num
-    primes << i if is_prime?(i)
+  until res.length == num
+    res << i if is_prime?(i)
     i += 1
   end
 
-  primes
+  res
 end
 
 # Write a recursive method that returns the first "num" factorial numbers.
@@ -38,6 +38,7 @@ end
 
 def factorials_rec(num)
   return [1] if num < 2
+
   facs = factorials_rec(num - 1)
   facs << facs.last * (num-1)
   facs
@@ -52,10 +53,9 @@ class Array
 
   def dups
     hash = Hash.new{[]}
-    each_with_index do |el, idx|
-      l = self[0...idx]
-      r = self[idx+1..-1]
-      hash[el] += [idx] if l.include?(el) || r.include?(el)
+    each_with_index do |n, i|
+      l = self[0...i]; r = self[i+1..-1]
+      hash[n] += [i] if l.include?(n) || r.include?(n)
     end
 
     hash
@@ -70,11 +70,10 @@ class String
 
   def symmetric_substrings
     res = []
-
-    (0...length).each do |start_i|
-      (start_i+2...length).each do |end_i|
-        subword = self[start_i..end_i]
-        res << subword if subword == subword.reverse
+    (0...length).each do |i1|
+      (i1+2...length).each do |i2|
+        sub = self[i1..i2]
+        res << sub if sub == sub.reverse
       end
     end
 
@@ -88,7 +87,7 @@ class Array
 
   def merge_sort(&prc)
     prc ||= Proc.new {|a,b| a <=> b}
-    return self if length < 2
+    return self if self.length < 2
     mid = length/2
     l = self.take(mid).merge_sort(&prc)
     r = self.drop(mid).merge_sort(&prc)
@@ -99,7 +98,6 @@ class Array
   private
   def self.merge(l, r, &prc)
     res = []
-
     until l.empty? || r.empty?
       case prc.call(l.first, r.first)
       when -1
@@ -111,13 +109,10 @@ class Array
       end
     end
 
-    res.concat(l); res.concat(r)
+    res += l; res += r
     res
   end
 end
-
-
-
 
 
 # require 'byebug'
