@@ -8,7 +8,7 @@ Instructions: implement all of the pending specs (the `it` statements without bl
 describe Dessert do
   let(:chef) { double("chef", name: "Guy")}
   let(:dessert) {Dessert.new("cake", 20, chef)}
-  let(:dessert2) {Dessert.new("type", "a", :chef)}
+  let(:dessert2) {Dessert.new("type", "a", chef)}
 
   describe "#initialize" do
     it "sets a type" do
