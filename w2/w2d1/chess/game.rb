@@ -35,7 +35,7 @@ class Game
       swap_turn!
     end
 
-    puts "Game Over! #{winner.name} wins!"
+    puts "Game Over! #{winner.namegit } wins!"
   end
 
   def swap_turn!
