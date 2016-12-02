@@ -110,12 +110,33 @@ class MetaCorgiSnacks
     snack_box.methods.grep(/^get_(.*)_info$/) { MetaCorgiSnacks.define_snack $1 }
   end
 
-  def method_missing(name, *args)
-    
-  end
+  # def method_missing(name, *args)
+  #   snacks = ["bone", "kibble", "treat"]
+  #   name = name.to_s
+  #
+  #   if snacks.include?(name)
+  #     info = @snack_box.send("get_#{name}_info", @box_id)
+  #     tastiness = @snack_box.send("get_#{name}_tastiness", @box_id)
+  #     result = "#{name}: #{info}: #{tastiness} "
+  #     tastiness > 30 ? "* #{result}" : result
+  #   else
+  #     super
+  #   end
+  # end
+=begin
+Write a new class method called ::define_snack that uses
+::define_method to dynamically build each of the snack methods
+(bone, kibble, and treat) on the CorgiSnacks class. + Once again,
+you'll want to use #send to call the right methods on the @snack_box.
+=end
 
 
   def self.define_snack(name)
-    # Your code goes here...
+    define_method(name) do
+      info = @snack_box.send("get_#{name}_info", @box_id)
+      tastiness = @snack_box.send("get_#{name}_tastiness", @box_id)
+      result = "#{name}: #{info}: #{tastiness} "
+      tastiness > 30 ? "* #{result}" : result
+    end
   end
 end
