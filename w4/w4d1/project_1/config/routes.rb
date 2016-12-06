@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  resources :users
+
+  resources :users do
+    resources :contacts, only: [:index]
+  end
   # get 'users' => 'users#index', :as => 'users'
   # post 'users' => 'users#create'
   # get 'users/new' => 'users#new', :as => 'new_user'
@@ -8,4 +11,6 @@ Rails.application.routes.draw do
   # patch 'users/:id' => 'users#update'
   # put 'users/:id' => 'users#update'
   # delete 'users/:id' => 'users#delete'
+  resources :contacts, only: [:create, :share, :update, :destroy]
+  resources :contact_shares, only: [:create, :destroy]
 end
