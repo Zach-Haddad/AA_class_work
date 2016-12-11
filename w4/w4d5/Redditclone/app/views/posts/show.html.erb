@@ -1,0 +1,7 @@
+<!-- post -->
+
+<h1><a href=" http://<%=@post.url%> "> <%= @post.title %></a></h1>
+
+<p> <%= @post.content %></p>
+
+<%= link_to "Edit post", edit_post_url(@post) %>

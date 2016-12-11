@@ -1,0 +1,14 @@
+<!-- signup -->
+
+<form action=" <%= users_url %>" method="post">
+  <%= auth_token %>
+  <h1>Sign up!</h1>
+
+  <label for="username">Username:</label>
+  <input type="text" name="user[username]">
+
+  <label for="password">Password (must be at least 6 characters):</label>
+  <input type="password" name="user[password]">
+
+  <input type="submit">
+</form>

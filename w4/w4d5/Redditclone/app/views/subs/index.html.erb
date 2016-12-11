@@ -1,0 +1,7 @@
+<!-- list all subs -->
+<h1>List of Subreddits</h1>
+<ul>
+<% Sub.all.each do |sub| %>
+<li><%= link_to "#{sub.title}", sub_url(sub) %></li>
+<% end  %>
+</ul>

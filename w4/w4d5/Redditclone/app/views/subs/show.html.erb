@@ -1,0 +1,7 @@
+<!-- display posts for given sub -->
+<h1><%= @sub.title %></h1>
+<ul>
+<% @sub.posts.all.each do |post| %>
+<li><%= link_to "#{post.title}", post_url(post) %></li>
+<% end  %>
+</ul>
