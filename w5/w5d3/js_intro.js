@@ -1,10 +1,4 @@
-/*
-Write a function that takes three strings -
-a verb, an adjective, and a noun - uppercases and
-interpolates them into the sentence
- "We shall VERB the ADJECTIVE NOUN".
-
-*/
+//PART ONE
 
 function madLib(verb, adj, noun){
   console.log("We shall" + verb.toUpperCase() + "the " + adj.toUpperCase() + " " + noun.toUpperCase())
@@ -62,4 +56,15 @@ function allOrNothing(mod, arr){
   }
 
   return true;
+}
+
+//PART TWO
+
+function titleize(names, callback){
+  let titleized = names.map(name => `Mx. ${name} Jingleheimer Schmidt`);
+  callback(titleized);
+}
+
+titleize(["Mary", "Brian", "Leo"]), (names) => {
+  names.forEach(name => console.log(name))
 }
