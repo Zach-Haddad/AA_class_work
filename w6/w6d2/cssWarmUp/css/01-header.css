@@ -25,3 +25,11 @@ body {
   border-right: 1px solid #ccc;
   border-left: 1px solid #ccc;
 }
+
+
+  section {
+    height: 100px;
+    width: 100px;
+    /*float: left;*/
+    display: inline-block;
+  }
