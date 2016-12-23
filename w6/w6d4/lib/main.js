@@ -11,5 +11,7 @@ window.$l = arg => {
       if (arg instanceof HTMLElement){
         return new DomNodeCollection([arg]);
       }
+    case "function":
+      
   }
 };

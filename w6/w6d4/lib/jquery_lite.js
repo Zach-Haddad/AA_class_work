@@ -57,6 +57,8 @@
 	      if (arg instanceof HTMLElement){
 	        return new DomNodeCollection([arg]);
 	      }
+	    case "function":
+	      
 	  }
 	};
 
@@ -115,6 +117,49 @@
 
 	  removeClass(className){
 	    this.each(node => node.classList.remove(className));
+	  }
+
+	  children(){
+	    let childrenArr = [];
+	    this.each(node => {
+	      let newChildren = Array.from(node.children);
+	      childrenArr = childrenArr.concat(newChildren);
+	    });
+	    return new DomNodeCollection(childrenArr);
+	  }
+
+	  parents(){
+	    let parentArr = [];
+	    this.each(node => {
+	      parentArr.push(node.parentNode);
+	    });
+	    return new DomNodeCollection(parentArr);
+	  }
+
+	  find(selector){
+	    let res = [];
+	    this.each(node => {
+	      let selections = document.querySelectorAll(selector);
+	      res = res.concat(selections);
+	    });
+	    return new DomNodeCollection(res);
+	  }
+
+	  remove(){
+	    this.empty();
+	    this.nodes = new DomNodeCollection();
+	  }
+
+	  on(eventName, cb){
+	    this.each(node => {
+	      node.addEventListener(eventName, cb);
+	    });
+	  }
+
+	  off(eventName){
+	    this.each(node => {
+	      node.removeEventListener(eventName, cb);
+	    });
 	  }
 	}
 
