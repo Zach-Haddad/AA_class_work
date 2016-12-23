@@ -42,9 +42,25 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
+
+	let Router = __webpack_require__(1);
+	// let Compose = require("./compose");
+	let Inbox = __webpack_require__(4);
+	// let Sent = require("./sent");
+
+	let routes = {
+	  // compose: Compose,
+	  inbox: Inbox,
+	  // sent: Sent
+	};
+
 
 	document.addEventListener("DOMContentLoaded", () => {
+	  let content = document.querySelector(".content");
+	  let router = new Router(content, routes);
+	  router.start();
+
 	  let navItems = Array.from(document.querySelectorAll(".sidebar-nav"));
 	  navItems.forEach(navItem => {
 	    navItem.addEventListener("click", () => {
@@ -53,6 +69,57 @@
 	    });
 	  });
 	});
+
+
+/***/ },
+/* 1 */
+/***/ function(module, exports) {
+
+	class Router {
+	  constructor(node){
+	    this.node = node;
+	    this.routes = routes;
+	  }
+
+	  start(){
+	    this.render();
+	    window.addEventListener("hashchange", () =>{
+	      this.render();
+	    });
+	  }
+
+	  activeRoute(){
+	    let hashFrag = window.location.hash.substr(1);
+	    let component = this.routes[hashFrag];
+	    return component;
+
+	  }
+
+	  render(){
+	    this.node.innerHTML = "";
+	    let route = this.activeRoute();
+	    let newNode = document.createElement("p");
+	    newNode.innerHTML = route;
+	    if(route) {
+	      this.node.appendChild(route.render());
+	    }
+	  }
+	}
+
+	module.exports = Router;
+
+
+/***/ },
+/* 2 */,
+/* 3 */,
+/* 4 */
+/***/ function(module, exports) {
+
+	class Inbox {
+
+	}
+
+	module.exports = Inbox;
 
 
 /***/ }
