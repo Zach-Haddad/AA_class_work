@@ -21,12 +21,12 @@ class Blue extends React.Component {
   }
 
   resetBlue() {
-    // your code here
+    this.props.router.push('/blue');
   }
 
   addIndigo() {
-    // your code here
+    this.props.router.push('/blue/indigo');
   }
-};
+}
 
 export default withRouter(Blue);
